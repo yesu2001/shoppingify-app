@@ -14,7 +14,7 @@ export default function AddedItems() {
   const meatList = shoppingCart.filter((item) => item.category === "Meat");
 
   return (
-    <div className="relative h-full">
+    <div className="relative h-full bg-[#FFF0DE]">
       <div className="height-[200px] bg-[#80485B] flex items-center rounded-xl gap-4 px-4 py-2">
         <div className="relative">
           <img src={pic} className="mt-[-25px] h-[150px] w-[80px]" />

@@ -9,7 +9,7 @@ export default function Item({ data }) {
         {data.items.map((item, index) => (
           <div
             key={index}
-            className="flex-[0.25] shadow-md flex items-center justify-between bg-white py-2 px-4 rounded-md"
+            className="flex-[0.2] shadow-md flex items-center justify-between bg-white py-2 px-4 rounded-md"
           >
             <p className="cursor-pointer">{item.name}</p>
             <button>
