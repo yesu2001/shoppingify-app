@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-export default function AddNewItem() {
+export default function AddNewItem({ setOpen, handleAddNewItem }) {
   const categories = ["Fruits", "Vegetables", "Meat", "Beverages"];
+  const [showOptions, setShowOptions] = useState(false);
   const [itemData, setItemData] = useState({
     name: "",
     image: "",
@@ -9,7 +10,13 @@ export default function AddNewItem() {
     category: "",
   });
 
-  const handleSetCategory = (item) => {};
+  const handleSetCategory = (item) => {
+    setItemData((prevState) => ({
+      ...prevState,
+      category: item,
+    }));
+    setShowOptions(false);
+  };
 
   const handleChange = (e) => {
     setItemData((prevState) => ({
@@ -20,6 +27,22 @@ export default function AddNewItem() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (
+      itemData.image === "" ||
+      itemData.name === "" ||
+      itemData.category === "" ||
+      itemData.note === ""
+    ) {
+      alert("Please fill all the fields!");
+    }
+    // console.log(itemData);
+    handleAddNewItem(itemData);
+    // setItemData({
+    //   image: "",
+    //   name: "",
+    //   category: "",
+    //   note: "",
+    // });
   };
 
   return (
@@ -71,8 +94,9 @@ export default function AddNewItem() {
                 value={itemData.category}
                 onChange={handleChange}
                 className="border-2 border-[#BDBDBD] p-2 rounded-lg outline-none w-full"
+                onClick={() => setShowOptions(true)}
               />
-              {itemData.category && (
+              {showOptions && (
                 <div className="shadow-md p-2 rounded-md mt-2">
                   {categories.map((item, index) => (
                     <option
@@ -100,7 +124,12 @@ export default function AddNewItem() {
           </div>
         </div>
         <div className="flex-[0.1] flex gap-8 items-center justify-center">
-          <button className="text-sm font-semibold">cancel</button>
+          <button
+            className="text-sm font-semibold"
+            onClick={() => setOpen(false)}
+          >
+            cancel
+          </button>
           <input
             type="submit"
             value="Save"

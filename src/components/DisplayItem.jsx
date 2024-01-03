@@ -1,17 +1,20 @@
 import React from "react";
 import { IoMdArrowBack } from "react-icons/io";
 
-export default function DisplayItem() {
+export default function DisplayItem({ setItemData, data }) {
   return (
-    <div className="h-full p-8">
-      <div className="flex cursor-pointer items-center gap-2 text-[#F9A109] font-semibold text-sm">
+    <div className={`h-full p-8 ${!data && "hidden"} bg-white`}>
+      <div
+        className="flex cursor-pointer items-center gap-2 text-[#F9A109] font-semibold text-sm"
+        onClick={() => setItemData(null)}
+      >
         <IoMdArrowBack />
         <p>back</p>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-3 my-4">
         <div>
           <img
-            src="https://shorturl.at/uGOR6"
+            src={data?.image}
             al="pisc"
             width={"100%"}
             height={200}
@@ -20,23 +23,17 @@ export default function DisplayItem() {
         </div>
         <div className="space-y-1">
           <label className="text-[#C1C1C4] text-xs">Name</label>
-          <p>Avocado</p>
+          <p>{data?.name}</p>
         </div>
         <div>
           <label className="text-[#C1C1C4] text-xs">Category</label>
-          <p>Fruit</p>
+          <p>{data?.category}</p>
         </div>
         <div>
           <label className="text-[#C1C1C4] text-xs">Note</label>
-          <p>
-            Nutrient-dense foods are those that provide substantial amounts of
-            vitamins, minerals and other nutrients with relatively few calories.
-            One-third of a medium avocado (50 g) has 80 calories and contributes
-            nearly 20 vitamins and minerals, making it a great nutrient-dense
-            food choice.
-          </p>
+          <p>{data?.note}</p>
         </div>
-        <div className="flex items-center justify-center gap-8">
+        <div className="flex items-center justify-center gap-8 absolute bottom-4 right-[5%]">
           <button className="font-600">delete</button>
           <button className="bg-[#F9A109] px-3 py-2 text-white rounded-md">
             Add to list
