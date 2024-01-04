@@ -8,6 +8,7 @@ export default function RightComponent({
   itemData,
   handleAddNewItem,
   shoppingCart,
+  setShoppingCart,
 }) {
   const [open, setOpen] = useState(false);
   return (
@@ -20,20 +21,31 @@ export default function RightComponent({
           setOpen={setOpen}
           handleAddNewItem={handleAddNewItem}
           shoppingCart={shoppingCart}
+          setShoppingCart={setShoppingCart}
         />
       )}
     </div>
   );
 }
 
-const ShowOther = ({ open, setOpen, handleAddNewItem, shoppingCart }) => {
+const ShowOther = ({
+  open,
+  setOpen,
+  handleAddNewItem,
+  shoppingCart,
+  setShoppingCart,
+}) => {
   return (
     <>
       {open ? (
         <AddNewItem setOpen={setOpen} handleAddNewItem={handleAddNewItem} />
       ) : (
         <div className="h-full bg-[#FFF0DE] p-8">
-          <AddedItems setOpen={setOpen} shoppingCart={shoppingCart} />
+          <AddedItems
+            setOpen={setOpen}
+            shoppingCart={shoppingCart}
+            setShoppingCart={setShoppingCart}
+          />
         </div>
       )}
     </>

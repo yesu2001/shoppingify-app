@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdDeleteOutline } from "react-icons/md";
+import { BsDash } from "react-icons/bs";
+import { IoMdAdd } from "react-icons/io";
 import pic from "../assets/source.svg";
 
-export default function AddedItems({ setOpen, shoppingCart }) {
+export default function AddedItems({ setOpen, shoppingCart, setShoppingCart }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [openComplete, setOpenComplete] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [cartName, setCartName] = useState("");
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState({});
 
@@ -19,6 +26,27 @@ export default function AddedItems({ setOpen, shoppingCart }) {
 
     setLoading(false);
   }, [shoppingCart]);
+
+  const handleRemoveFromCart = (item) => {
+    console.log(cart);
+    console.log(item);
+  };
+
+  const handleIncrease = (item) => {};
+
+  const handleDecrease = (item) => {};
+
+  const handleSave = () => {
+    setShoppingCart((prevState) => ({
+      ...prevState,
+      name: cartName,
+    }));
+    setCartName("");
+  };
+
+  const handleConfirm = () => {
+    setOpenConfirm(false);
+  };
 
   return (
     <div className="relative h-full bg-[#FFF0DE]">
@@ -42,20 +70,55 @@ export default function AddedItems({ setOpen, shoppingCart }) {
         <>
           <div className="my-6 flex items-center justify-between">
             <p className="font-semibold text-xl">{shoppingCart?.name}</p>
-            <MdEdit className="text-2xl" />
+            <MdEdit
+              className="text-2xl"
+              onClick={() => setOpenComplete(true)}
+            />
           </div>
-          <div className="space-y-4 h-[50vh] overflow-auto">
+          <div className="space-y-4 h-[50vh] overflow-auto scrollbar-hide">
             {Object.entries(cart).map(([category, items]) => (
-              <div key={category} className="space-y-2">
+              <div key={category} className="space-y-4">
                 <p className="text-[#828282]">{category}</p>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {items.map((item, index) => (
                     <div
                       key={index}
                       className="flex justify-between items-center"
                     >
                       <p>{item.itemName}</p>
-                      <button>{item.quantity}</button>
+                      <div className="group relative">
+                        <button
+                          className={`rounded-2xl border border-[#F9A109] px-2 text-center text-[#F9A109] ${
+                            edit ? "hidden" : ""
+                          }`}
+                          onClick={() => setEdit(true)}
+                        >
+                          {item.quantity} pcs
+                        </button>
+                        <div
+                          className={`${
+                            edit ? "" : "hidden"
+                          } opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-3 bg-white p-0 rounded-lg overflow-hidden`}
+                        >
+                          <button
+                            className=" bg-[#F9A109] rounded-lg p-1"
+                            onClick={() => handleRemoveFromCart(item)}
+                          >
+                            <MdDeleteOutline className="text-2xl text-white" />
+                          </button>
+                          <div className="flex items-center gap-1 p-1 text-xs text-[#F9A109]">
+                            <button onClick={() => handleDecrease(item)}>
+                              <BsDash className="font-bolder" />
+                            </button>
+                            <p className="rounded-2xl border border-[#F9A109] px-2 text-center text-[#F9A109]">
+                              {item.quantity} pcs
+                            </p>
+                            <button onClick={() => handleIncrease(item)}>
+                              <IoMdAdd />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -66,14 +129,82 @@ export default function AddedItems({ setOpen, shoppingCart }) {
       )}
       <div className="absolute bottom-[-26px] left-[-30px] right-[-30px] bg-white h-[80px]">
         <div className="h-full flex items-center justify-center">
-          <div className="border-2 border-[#F9A109] h-10 rounded-lg overflow-hidden">
-            <input
-              type="text"
-              placeholder="Enter a name"
-              className="h-full outline-none px-2"
-            />
-            <button className="bg-[#F9A109] text-white h-full px-2 border-2 border-[#F9A109] rounded-md">
-              save
+          {openComplete ? (
+            <div className="flex items-center gap-8">
+              <button onClick={() => setOpenComplete(false)}>cancel</button>
+              <button
+                className="bg-[#56CCF2] text-white py-2 px-6 rounded-lg"
+                onClick={() => setOpenConfirm(true)}
+              >
+                Complete
+              </button>
+            </div>
+          ) : (
+            <div className="border-2 border-[#F9A109] h-10 rounded-lg overflow-hidden">
+              <input
+                type="text"
+                placeholder="Enter a name"
+                value={cartName}
+                onChange={(e) => setCartName(e.target.value)}
+                className="h-full outline-none px-2"
+              />
+              <button
+                className="bg-[#F9A109] text-white h-full px-2 border-2 border-[#F9A109] rounded-md"
+                onClick={handleSave}
+              >
+                save
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+      {openConfirm && (
+        <Modal
+          openConfirm={openComplete}
+          setOpenConfirm={setOpenConfirm}
+          handleConfirm={handleConfirm}
+        />
+      )}
+    </div>
+  );
+}
+
+function Modal({ openConfirm, setOpenConfirm, handleConfirm }) {
+  const handleClose = () => setOpenConfirm(false);
+
+  return (
+    <div
+      className={`fixed z-50 inset-0 overflow-y-auto ${
+        openConfirm ? "" : "hidden"
+      }`}
+    >
+      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div
+          className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          onClick={handleClose}
+        ></div>
+
+        <span
+          className="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+        >
+          &#8203;
+        </span>
+
+        <div className="relative inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:w-[350px]">
+          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <p>Are you sure that you want to cancel this list?</p>
+          </div>
+
+          <div className="px-4 py-3 flex item-center justify-end gap-4">
+            <button type="button" onClick={handleClose}>
+              cancel
+            </button>
+            <button
+              onClick={handleConfirm}
+              className="bg-[#EB5757] rounded-md px-4 py-2 text-white"
+            >
+              Yes
             </button>
           </div>
         </div>

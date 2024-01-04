@@ -50,6 +50,7 @@ function App() {
         itemData={itemData}
         handleAddNewItem={handleAddNewItem}
         shoppingCart={shoppingCart}
+        setShoppingCart={setShoppingCart}
       />
     </div>
   );
