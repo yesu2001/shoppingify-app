@@ -8,6 +8,7 @@ export default function CenterComponent({
   setItemData,
   itemsList,
   handleAddToCart,
+  historyData,
 }) {
   return (
     <div className="flex-[0.70] space-y-6 px-[100px]">
@@ -18,7 +19,7 @@ export default function CenterComponent({
           handleAddToCart={handleAddToCart}
         />
       )}
-      {activeTab === "history" && <ShowHistory />}
+      {activeTab === "history" && <ShowHistory historyData={historyData} />}
       {activeTab === "stats" && <ShowStatistics />}
     </div>
   );

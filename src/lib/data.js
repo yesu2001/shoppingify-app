@@ -100,15 +100,16 @@ export const itemsList = [
   },
 ];
 
-export const shoppingCart = [
-  { itemName: "Apple", category: "Fruits", quantity: 2 },
-  { itemName: "Banana", category: "Fruits", quantity: 1 },
-  { itemName: "Carrot", category: "Vegetables", quantity: 3 },
-  { itemName: "Chicken Breast", category: "Meat", quantity: 2 },
-  { itemName: "Coffee", category: "Beverages", quantity: 1 },
-];
-
 export const shoppingList = {
+  id: "4563df7dsf458349",
   name: "Shopping List",
-  items: [...shoppingCart],
+  items: [
+    { itemName: "Apple", category: "Fruits", quantity: 2 },
+    { itemName: "Banana", category: "Fruits", quantity: 1 },
+    { itemName: "Carrot", category: "Vegetables", quantity: 3 },
+    { itemName: "Chicken Breast", category: "Meat", quantity: 2 },
+    { itemName: "Coffee", category: "Beverages", quantity: 1 },
+  ],
 };
+
+export const history = [];

@@ -3,6 +3,7 @@ import { MdEdit, MdDeleteOutline } from "react-icons/md";
 import { BsDash } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import pic from "../assets/source.svg";
+import { history } from "../lib/data";
 
 export default function AddedItems({ setOpen, shoppingCart, setShoppingCart }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -27,14 +28,63 @@ export default function AddedItems({ setOpen, shoppingCart, setShoppingCart }) {
     setLoading(false);
   }, [shoppingCart]);
 
-  const handleRemoveFromCart = (item) => {
-    console.log(cart);
-    console.log(item);
+  const isEmpty = Object.keys(shoppingCart).length === 0;
+
+  const handleRemoveFromCart = (itemToRemove) => {
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart }; // Create a new object to avoid mutation
+
+      for (const category in updatedCart) {
+        const items = updatedCart[category];
+        const updatedItems = items.filter((item) => {
+          return (
+            item.itemName !== itemToRemove.itemName ||
+            item.category !== itemToRemove.category ||
+            item.quantity !== itemToRemove.quantity
+          );
+        });
+        updatedCart[category] = updatedItems;
+      }
+
+      return updatedCart; // Return the updated cart object to set the state
+    });
   };
 
-  const handleIncrease = (item) => {};
+  const handleIncrease = (itemToIncrease) => {
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart };
 
-  const handleDecrease = (item) => {};
+      for (const category in updatedCart) {
+        const items = updatedCart[category];
+        const updatedItems = items.map((item) =>
+          item.itemName === itemToIncrease.itemName
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+        updatedCart[category] = updatedItems;
+      }
+
+      return updatedCart;
+    });
+  };
+
+  const handleDecrease = (itemToDecrease) => {
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart };
+
+      for (const category in updatedCart) {
+        const items = updatedCart[category];
+        const updatedItems = items.map((item) =>
+          item.itemName === itemToDecrease.itemName
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+        updatedCart[category] = updatedItems;
+      }
+
+      return updatedCart;
+    });
+  };
 
   const handleSave = () => {
     setShoppingCart((prevState) => ({
@@ -45,7 +95,12 @@ export default function AddedItems({ setOpen, shoppingCart, setShoppingCart }) {
   };
 
   const handleConfirm = () => {
+    history.push(shoppingCart);
+    setShoppingCart({});
+    setCart({});
+    setOpenComplete(false);
     setOpenConfirm(false);
+    console.log(history);
   };
 
   return (
@@ -64,9 +119,14 @@ export default function AddedItems({ setOpen, shoppingCart, setShoppingCart }) {
           </button>
         </div>
       </div>
-      {loading ? (
-        <p>Loading cart</p>
-      ) : (
+      {Object.keys(shoppingCart).length === 0 && (
+        <p className="text-slate-600 my-6 text-sm text-center">
+          Shopping cart is Empty. Add items to the list!
+        </p>
+      )}
+      {loading && isEmpty && <p>Loading cart</p>}
+
+      {!isEmpty && !loading && (
         <>
           <div className="my-6 flex items-center justify-between">
             <p className="font-semibold text-xl">{shoppingCart?.name}</p>
