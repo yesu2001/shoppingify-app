@@ -40,19 +40,3 @@ export default function ShowHistory({ historyData }) {
     </div>
   );
 }
-
-// <div className="flex item-center justify-between bg-white px-4 py-2 rounded-md">
-//   <p>Grocery List</p>
-//   <div className="flex items-center gap-6 text-xs">
-//     <p className="flex items-center text-[#C1C1C4] gap-2 text-md">
-//       <FaCalendarAlt />
-//       Mon 12.8.23
-//     </p>
-//     <p className="text-[#56CCF2] border border-[#56CCF2] px-2 rounded-md">
-//       Completed
-//     </p>
-//     <button className="text-[#F9A109] text-[30px]">
-//       <MdNavigateNext />
-//     </button>
-//   </div>
-// </div>

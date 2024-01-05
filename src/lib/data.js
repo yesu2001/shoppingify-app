@@ -113,3 +113,22 @@ export const shoppingList = {
 };
 
 export const history = [];
+
+export const stats = {
+  items: {
+    name: "Top Items",
+    items: [
+      { name: "Banana", percent: 12 },
+      { name: "Rice", percent: 10 },
+      { name: "Chicken", percent: 8 },
+    ],
+  },
+  category: {
+    name: "Top Category",
+    items: [
+      { name: "Fruits", percent: 23 },
+      { name: "Meat", percent: 14 },
+      { name: "Beverages", percent: 11 },
+    ],
+  },
+};

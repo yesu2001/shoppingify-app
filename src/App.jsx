@@ -3,7 +3,7 @@ import SideBar from "./components/SideBar";
 import CenterComponent from "./components/CenterComponent";
 import RightComponent from "./components/RightComponent";
 import { itemsList as itemsData, shoppingList, history } from "./lib/data";
-import { addNewNewItem } from "./lib/helpers";
+import { addNewNewItem, fetchAllData } from "./lib/helpers";
 import { generateUUID } from "./lib/utils";
 
 function App() {
@@ -40,9 +40,10 @@ function App() {
   }
 
   useEffect(() => {
+    const { itemsData, cartData, historyData } = fetchAllData();
     setItemsList(itemsData);
-    setShoppingCart(shoppingList);
-    setHistoryData(history);
+    setShoppingCart(cartData);
+    setHistoryData(historyData);
   }, []);
 
   return (
