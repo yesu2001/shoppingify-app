@@ -9,14 +9,16 @@ export default function CenterComponent({
   itemsList,
   handleAddToCart,
   historyData,
+  setOpenCart,
 }) {
   return (
-    <div className="flex-[0.70] space-y-6 px-[100px]">
+    <div className="space-y-3 px-[10px] md:space-y-6 md:px-[100px]">
       {activeTab === "items" && (
         <ShowItems
           setItemData={setItemData}
           itemsList={itemsList}
           handleAddToCart={handleAddToCart}
+          setOpenCart={setOpenCart}
         />
       )}
       {activeTab === "history" && <ShowHistory historyData={historyData} />}

@@ -3,8 +3,8 @@ import { stats } from "../lib/data";
 
 export default function ShowStatistics() {
   return (
-    <div className="my-10">
-      <div className="flex items-center gap-4">
+    <div className="w-full h-full my-10">
+      <div className="md:flex items-center gap-4">
         <div className="flex-[0.5]">
           <p className="text-2xl font-semibold">{stats.items.name}</p>
           <div className="my-4 space-y-4">

@@ -46,7 +46,7 @@ export default function AddNewItem({ setOpen, handleAddNewItem }) {
   };
 
   return (
-    <div className="bg-white h-full flex flex-col p-8">
+    <div className="bg-white w-full h-full flex flex-col p-8">
       <p className="flex-[0.1] font-500 text-2xl">Add a new item</p>
       <form className="flex-[1] flex flex-col" onSubmit={handleSubmit}>
         <div className="flex-[0.9] space-y-4">

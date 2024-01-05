@@ -2,7 +2,12 @@ import React from "react";
 import Header from "./Header";
 import Items from "./Items";
 
-export default function ShowItems({ setItemData, itemsList, handleAddToCart }) {
+export default function ShowItems({
+  setItemData,
+  itemsList,
+  handleAddToCart,
+  setOpenCart,
+}) {
   return (
     <div>
       <div>
@@ -13,6 +18,7 @@ export default function ShowItems({ setItemData, itemsList, handleAddToCart }) {
           setItemData={setItemData}
           itemsList={itemsList}
           handleAddToCart={handleAddToCart}
+          setOpenCart={setOpenCart}
         />
       </div>
     </div>

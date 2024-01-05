@@ -4,7 +4,7 @@ import { MdNavigateNext } from "react-icons/md";
 
 export default function ShowHistory({ historyData }) {
   return (
-    <div className="py-6">
+    <div className="w-full h-full py-6">
       <p className="text-bold text-2xl">Shopping History</p>
       {historyData.length > 0 ? (
         <div className="flex flex-col gap-8 my-8">
